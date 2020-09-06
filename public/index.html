@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyD_8FsT8iX3kCOePid5DH0zrfaF57r3eS0",
+        authDomain: "competitiors-tracker.firebaseapp.com",
+        databaseURL: "https://competitiors-tracker.firebaseio.com",
+        projectId: "competitiors-tracker",
+        storageBucket: "competitiors-tracker.appspot.com",
+        messagingSenderId: "682540991154",
+        appId: "1:682540991154:web:245030c8843252556cbfab",
+        measurementId: "G-ED5EHYS5E7"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    </script>
+
+    <script src="app.js" defer></script>
+
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" 
+            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    <h1>Competitors tracker</h1>
+
+    <section id="whenSignedOut">
+        <button id="signInBtn">Sign In With Google</button>
+    </section>
+
+    <section id="whenSignedIn">
+        <div id="userDetails"></div>
+
+        <section id="registerTeam">
+            <h3>Register a team: </h3>
+            <label for="name">Team name:</label>
+            <input id="name">
+            <br>
+            <label for="sports">Sports:</label>
+            <select id="sports">
+                <option>Taekwondo</option>
+                <option>Tennis</option>
+                <option>Snooker</option>
+            </select>
+            <br>
+
+            <label for="coach">Head Coach:</label>
+            <input id="coach">
+            <br>
+
+            <button id="addToDB">Add to DB</button>
+
+            <section id="teamsList">
+
+            </section>
+        
+        </section>
+
+        <button id="signOutBtn">Sign Out</button>
+    </section>
+    
+</body>
+</html>
