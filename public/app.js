@@ -85,20 +85,49 @@ function addTeamToDB(){
     }
 }
 
+const competitorName = document.getElementById("competitorName"),
+      competitorBirthDate = document.getElementById("competitorBirthDate"),
+      competitorStartYear = document.getElementById("competitorStartYear");
+
+competitorName.onchange = makeUploadButtonVisible;
+competitorBirthDate.onchange = makeUploadButtonVisible;
+competitorStartYear.onchange = makeUploadButtonVisible;
+
+function makeUploadButtonVisible(){
+    if(competitorName.value && competitorBirthDate.value && competitorStartYear.value){
+        document.getElementById("addCompetitorPhoto").hidden = false;
+        document.getElementById("photoHolder").hidden = false;
+    }
+}
+
+document.getElementById("registerCompetitorBtn").onclick = () => {
+    clearFields();
+}
+
+function clearFields(){
+    competitorName.value = "";
+    competitorBirthDate.value = "";
+    competitorStartYear.value = "";
+    document.getElementById("addCompetitorPhoto").value = "";
+    if(document.getElementById("currentPhoto")){
+        document.getElementById("photoHolder").removeChild(document.getElementById("currentPhoto"));
+    }
+
+    document.getElementById("addCompetitorPhoto").hidden = true;
+    document.getElementById("photoHolder").hidden = true;
+}
+
 const addCompetitorToDBBtn = document.getElementById("addCompetitorToDB");
 let lastAddedPhotoUrl;
 addCompetitorToDBBtn.onclick = addCompetititorToDB;
 
 function addCompetititorToDB(){
     try{
-        let competitorName = document.getElementById("competitorName").value
-        let birthDate = document.getElementById("competitiorBirthDate").value;
-        let startDate = document.getElementById("competitorStartYear").value;
         competitorsRef.add({
             coach_uid: loggedUser.uid,
-            name: competitorName,
-            birthDate: birthDate,
-            startDate: startDate,
+            name: competitorName.value,
+            birthDate: competitorBirthDate.value,
+            startDate: competitorStartYear.value,
             photoUrl: lastAddedPhotoUrl
         });
         
@@ -120,10 +149,12 @@ addCompetitorPhotoButton.addEventListener("change", async (e) => {
     await storageRef.put(file);
 
     storageRef.getDownloadURL().then(function(url) {
+        console.log(url);
         let img = document.createElement('img');
         img.setAttribute('src', url);
         img.setAttribute('width', "100px");
         img.setAttribute('height', "133px");
+        img.setAttribute('id', "currentPhoto");
         document.getElementById("photoHolder").appendChild(img);
         lastAddedPhotoUrl = url;
     }).catch((err) => {console.log(err)});
