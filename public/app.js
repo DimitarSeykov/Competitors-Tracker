@@ -85,19 +85,39 @@ function addTeamToDB(){
     }
 }
 
+const addCompetitorToDBBtn = document.getElementById("addCompetitorToDB");
+let lastAddedPhotoUrl;
+addCompetitorToDBBtn.onclick = addCompetititorToDB;
+
+function addCompetititorToDB(){
+    try{
+        let competitorName = document.getElementById("competitorName").value
+        let birthDate = document.getElementById("competitiorBirthDate").value;
+        let startDate = document.getElementById("competitorStartYear").value;
+        competitorsRef.add({
+            coach_uid: loggedUser.uid,
+            name: competitorName,
+            birthDate: birthDate,
+            startDate: startDate,
+            photoUrl: lastAddedPhotoUrl
+        });
+        
+        $("#modalRegisterCompetitor").modal('hide');
+    } catch(err){
+        console.log(err);
+    }    
+}
 
 const addCompetitorPhotoButton = document.getElementById("addCompetitorPhoto");
 
-addCompetitorPhotoButton.addEventListener("change", (e) => {
+addCompetitorPhotoButton.addEventListener("change", async (e) => {
     let file = e.target.files[0];
     let competitorName = document.getElementById("competitorName").value
     let fileName = loggedUser.uid + "_" + competitorName;
-    let birthDate = document.getElementById("competitiorBirthDate").value;
-    let startDate = document.getElementById("competitorStartYear").value;
     file.name = fileName;
     let fullName = "images/" + fileName;
     let storageRef = firebase.storage().ref(fullName);
-    storageRef.put(file);
+    await storageRef.put(file);
 
     storageRef.getDownloadURL().then(function(url) {
         let img = document.createElement('img');
@@ -105,19 +125,17 @@ addCompetitorPhotoButton.addEventListener("change", (e) => {
         img.setAttribute('width', "100px");
         img.setAttribute('height', "133px");
         document.getElementById("photoHolder").appendChild(img);
-
-        competitorsRef.add({
-            coach_uid: loggedUser.uid,
-            name: competitorName,
-            birthDate: birthDate,
-            startDate: startDate,
-            photoUrl: url
-        });
-
+        lastAddedPhotoUrl = url;
     }).catch((err) => {console.log(err)});
-
-    //TODO add competitor to DB
-
 
     // TODO: track upload progress
 });
+
+
+function openNav() {
+    document.getElementById("competitorsSideNav").style.width = "250px";
+}
+  
+function closeNav() {
+    document.getElementById("competitorsSideNav").style.width = "0";
+}
