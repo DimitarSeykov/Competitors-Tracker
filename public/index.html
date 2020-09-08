@@ -13,6 +13,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-storage.js"></script>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
@@ -48,9 +49,10 @@
     </section>
 
     <section id="whenSignedIn">
+
         <div id="userDetails"></div>
 
-        <section id="registerTeam">
+        <section id="registerTeam" hidden="true">
             <h3>Register a team: </h3>
             <label for="name">Team name:</label>
             <input id="name">
@@ -67,12 +69,41 @@
             <input id="coach">
             <br>
 
-            <button id="addToDB">Add to DB</button>
-
-            <section id="teamsList">
-
-            </section>
+            <button id="addTeamToDB">Register Team</button>
         
+        </section>
+
+        <section id="whenRegisteredTeam">
+
+            <div class="modal" id="modalRegisterCompetitor">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button class="close" type="button" data-dismiss="modal">&times</button>
+                            <h2 class="modal-title">Register Competitor</h2>
+                        </div>
+
+                        <div class="modal-body">
+                            <label for="competitorName">Name:</label>
+                            <input id="competitorName">
+
+                            <label for="competitorBirthdate">Birth Date</label>
+                            <input type="date" id="competitiorBirthDate">
+
+                            <label for="competitorStartYear">Start Year</label>
+                            <input id="competitorStartYear"> 
+
+                            <input type="file" value="upload" id="addCompetitorPhoto">
+                            <div id="photoHolder"></div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <a href="#" data-toggle="modal" data-target="#modalRegisterCompetitor">Register Competitor</a>
+            </div>
         </section>
 
         <button id="signOutBtn">Sign Out</button>
