@@ -48,6 +48,7 @@ auth.onAuthStateChanged(user => {
                 whenRegisteredTeam.hidden = false;
             }
         });
+        listCompetitors();
 
     } else {
         //not signed in
@@ -132,9 +133,28 @@ function addCompetititorToDB(){
         });
         
         $("#modalRegisterCompetitor").modal('hide');
+        listCompetitors();
+
     } catch(err){
         console.log(err);
     }    
+}
+
+function listCompetitors(){
+    unsubscribe = competitorsRef
+            .where('coach_uid', '==', loggedUser.uid)
+            .orderBy('name')
+            .onSnapshot(querySnapshot => {
+
+                const items = querySnapshot.docs.map(doc => {
+
+                    return `<li>${doc.data().name}</li>`
+
+                });
+
+                document.getElementById("competitorsSideNavNamesHolder").innerHTML = items.join('');
+
+            });
 }
 
 const addCompetitorPhotoButton = document.getElementById("addCompetitorPhoto");
