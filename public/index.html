@@ -104,6 +104,10 @@
                 </div>
             </div>
 
+            <div>
+                <a href="#" id="registerCompetitorBtn" data-toggle="modal" data-target="#modalRegisterCompetitor">Register Competitor</a>
+            </div>
+
             <div class="modal" id="modalShowCompetitor">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -130,10 +134,49 @@
                     </div>
                 </div>
             </div>
-            
-            <div>
-                <a href="#" id="registerCompetitorBtn" data-toggle="modal" data-target="#modalRegisterCompetitor">Register Competitor</a>
+
+            <div class="modal" id="modalRegisterCompetition">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button class="close" type="button" data-dismiss="modal">&times</button>
+                            <h2 class="modal-title">Add Competition</h2>
+                        </div>
+
+                        <div class="modal-body">
+                            <label for="competitionName">Name:</label>
+                            <input id="competitionName">
+
+                            <label for="competitionCountry">Country</label>
+                            <input id="competitionCountry"> 
+
+                            <label for="competitionCity">City</label>
+                            <input id="competitionCity"> 
+                            
+                            <label for="competitionStartDate ">Start Date</label>
+                            <input type="date" id="competitionStartDate">
+
+                            <label for="competitionEndDate ">End Date</label>
+                            <input type="date" id="competitionEndDate">
+
+                            <label for="competitionVenue">Venue</label>
+                            <input id="competitionVenue"> 
+
+                            <label for="competitionRank">Rank</label>
+                            <input id="competitionRank"> 
+                            
+                            <button id="addCompetitionToDB">Add</button>
+                            
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <div>
+                <a href="#" id="registerCompetitionBtn" data-toggle="modal" data-target="#modalRegisterCompetition">Register Competition</a>
+            </div>
+            
+           
             <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; List Competitors</span>
             <div id="competitorsSideNav" class="sidenav">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>

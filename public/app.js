@@ -13,7 +13,9 @@ const teamsList = document.getElementById("teamsList");
 const provider = new firebase.auth.GoogleAuthProvider();
 let teamsRef;
 let competitorsRef;
+let competitionsRef;
 let unsubscribe;
+let competitionsUnsubscribe;
 
 signInBtn.onclick = () => auth.signInWithPopup(provider);
 
@@ -30,6 +32,7 @@ auth.onAuthStateChanged(user => {
 
         teamsRef = db.collection("teams");
         competitorsRef = db.collection("competitors");
+        competitionsRef = db.collection("competitions");
         loggedUser = user;
 
         let team = teamsRef.where("uid", "==", loggedUser.uid);
@@ -40,6 +43,7 @@ auth.onAuthStateChanged(user => {
                 registerTeam.hidden = false;
                 userDetails.innerHTML = `<h3> Hello, ${user.displayName} ! </h3> <p> You must register a team! </p>`;
                 whenRegisteredTeam.hidden = true;
+                addTeamToDBButton.hidden = false;
             } else {
                 registerTeam.hidden = true;
                 let data = querySnapshot.docs[0].data();
@@ -201,6 +205,35 @@ addCompetitorPhotoButton.addEventListener("change", async (e) => {
 
     // TODO: track upload progress
 });
+
+document.getElementById("addCompetitionToDB").onclick = () => {
+    let name = document.getElementById("competitionName").value,
+        country = document.getElementById("competitionCountry").value,
+        city = document.getElementById("competitionCity").value,
+        startDate = document.getElementById("competitionStartDate").value,
+        endDate = document.getElementById("competitionEndDate").value,
+        venue = document.getElementById("competitionVenue").value,
+        rank = document.getElementById("competitionRank").value;
+
+        if(!endDate){
+            endDate = startDate;
+        }
+
+        competitionsRef.add({
+            coach_uid: loggedUser.uid,
+            name: name, 
+            country: country,
+            city:city,
+            startDate: startDate,
+            endDate: endDate,
+            venue: venue,
+            rank: rank
+        });
+
+
+        $("#modalRegisterCompetition").modal('hide');
+
+}
 
 
 function openNav() {
