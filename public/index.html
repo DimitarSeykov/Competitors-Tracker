@@ -103,6 +103,33 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal" id="modalShowCompetitor">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button class="close" type="button" data-dismiss="modal">&times</button>
+                            <h2 class="modal-title">Competitor Info</h2>
+                        </div>
+
+                        <div class="modal-body">
+                            <label for="registeredCompetitorName">Name:</label>
+                            <input id="registeredCompetitorName" disabled>
+
+                            <label for="registeredCompetitorBirthDate ">Birth Date</label>
+                            <input type="date" id="registeredCompetitorBirthDate" disabled>
+
+                            <label for="registeredCompetitorStartYear">Start Year</label>
+                            <input id="registeredCompetitorStartYear" disabled> 
+
+                            <div id="registeredPhotoHolder">
+                                <img id="registeredPhoto">
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
             
             <div>
                 <a href="#" id="registerCompetitorBtn" data-toggle="modal" data-target="#modalRegisterCompetitor">Register Competitor</a>

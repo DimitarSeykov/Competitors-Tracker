@@ -140,21 +140,41 @@ function addCompetititorToDB(){
     }    
 }
 
-function listCompetitors(){
+var competitors = {};
+
+async function listCompetitors(){
     unsubscribe = competitorsRef
             .where('coach_uid', '==', loggedUser.uid)
             .orderBy('name')
             .onSnapshot(querySnapshot => {
 
-                const items = querySnapshot.docs.map(doc => {
+                document.getElementById("competitorsSideNavNamesHolder").innerHTML = '';
+                for(doc of querySnapshot.docs){
+                    let listItem = document.createElement('li');
+                    listItem.innerText = doc.data().name;
+                    competitors[doc.data().name] = doc.data();
+                    listItem.setAttribute('class', "listCompetitor");
+                    document.getElementById("competitorsSideNavNamesHolder").appendChild(listItem);
+                }
 
-                    return `<li>${doc.data().name}</li>`
-
+                document.querySelectorAll(".listCompetitor").forEach(item => {
+                    item.onclick = displayCompetitorInfo;
                 });
 
-                document.getElementById("competitorsSideNavNamesHolder").innerHTML = items.join('');
-
             });
+            
+}
+
+function displayCompetitorInfo(){
+    let name = this.innerText;
+    $("#modalShowCompetitor").modal('show');
+    document.getElementById("registeredCompetitorName").value = competitors[name].name;
+    document.getElementById("registeredCompetitorBirthDate").value = competitors[name].birthDate;
+    document.getElementById("registeredCompetitorStartYear").value = competitors[name].startDate;
+    let photo = document.getElementById("registeredPhoto")
+    photo.setAttribute("src", competitors[name].photoUrl);
+    photo.setAttribute("height", "133px");
+    photo.setAttribute("width", "100px");
 }
 
 const addCompetitorPhotoButton = document.getElementById("addCompetitorPhoto");
