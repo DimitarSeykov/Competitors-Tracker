@@ -14,8 +14,10 @@ const provider = new firebase.auth.GoogleAuthProvider();
 let teamsRef;
 let competitorsRef;
 let competitionsRef;
+let resultsRef;
 let unsubscribe;
 let competitionsUnsubscribe;
+let resultsUnsubscribe;
 
 signInBtn.onclick = () => auth.signInWithPopup(provider);
 
@@ -33,6 +35,7 @@ auth.onAuthStateChanged(user => {
         teamsRef = db.collection("teams");
         competitorsRef = db.collection("competitors");
         competitionsRef = db.collection("competitions");
+        resultsRef = db.collection("competitors_in_competitions");
         loggedUser = user;
 
         let team = teamsRef.where("uid", "==", loggedUser.uid);
@@ -53,6 +56,7 @@ auth.onAuthStateChanged(user => {
             }
         });
         listCompetitors();
+        addCompetitionsToSelect();
 
     } else {
         //not signed in
@@ -145,8 +149,9 @@ function addCompetititorToDB(){
 }
 
 var competitors = {};
+var competitions = {};
 
-async function listCompetitors(){
+function listCompetitors(){
     unsubscribe = competitorsRef
             .where('coach_uid', '==', loggedUser.uid)
             .orderBy('name')
@@ -165,8 +170,19 @@ async function listCompetitors(){
                     item.onclick = displayCompetitorInfo;
                 });
 
+                loadCompetitorsToSelect();
+
             });
-            
+}
+
+function loadCompetitorsToSelect(){
+    let competitorSelect = document.getElementById("competitorNameResult");
+    competitorSelect.innerHTML = '<option></option>';
+    for(comp in competitors){
+        let option = document.createElement("option");
+        option.innerText = comp;
+        competitorSelect.appendChild(option);
+    }
 }
 
 function displayCompetitorInfo(){
@@ -232,9 +248,121 @@ document.getElementById("addCompetitionToDB").onclick = () => {
 
 
         $("#modalRegisterCompetition").modal('hide');
+        addCompetitionsToSelect();
 
 }
 
+function addCompetitionsToSelect(){
+    competitionsUnsubscribe = competitionsRef
+            .where('coach_uid', '==', loggedUser.uid)
+            .onSnapshot(querySnapshot => {
+
+                document.getElementById("competitionResult").innerHTML = '<option></option>';
+                for(doc of querySnapshot.docs){
+                    //console.log(doc.data());
+                    let selectItem = document.createElement('option');
+                    selectItem.innerText = doc.data().name;
+                    competitions[doc.data().name] = doc.data();
+                    document.getElementById("competitionResult").appendChild(selectItem);
+                }
+            });
+}
+
+
+document.getElementById("addResultToDB").onclick = () => {
+    let competitorName = document.getElementById("competitorNameResult").value,
+        competitionName = document.getElementById("competitionResult").value,
+        placement = document.getElementById("result").value;
+    resultsRef.add({
+        coach_uid: loggedUser.uid,
+        competitorName: competitorName,
+        competitionName: competitionName,
+        placement: placement,
+        date: competitions[competitionName].startDate
+    });
+
+    $("#modalRegisterResult").modal('hide');
+}
+
+document.getElementById("showFilters").onclick = () => {
+    document.getElementById("filterName").innerHTML = document.getElementById("competitorNameResult").innerHTML;
+    document.getElementById("filterCompetition").innerHTML = document.getElementById("competitionResult").innerHTML;
+}
+
+document.getElementById("filter").onclick = async () => {
+    let name = document.getElementById("filterName").value,
+        competition = document.getElementById("filterCompetition").value,
+        from = document.getElementById("filterDateStart").value,
+        to = document.getElementById("filterDateEnd").value;
+    
+    //console.log(from);
+    let query = resultsRef;
+    if(name){
+        query = query.where('competitorName', '==', name);
+        query = query.orderBy("competitorName");
+    }
+    if(competition){
+        query = query.where('competitionName', '==', competition);
+        query = query.orderBy("competitorName");
+    }
+    if(from){
+        query = query.where('date', '>=', from);
+    }
+    if(to){
+        query = query.where('date', '<=', to);
+    }
+
+    query = await query.get();
+    if(query.empty){
+        console.log("empty query");
+    }
+    document.getElementById("filteredResults").innerHTML = "";
+
+    summary = {};
+
+    query.forEach(doc => {
+        let row = document.createElement("tr");
+        let curName = doc.data().competitorName
+        row.innerHTML = `<td>${curName}</td><td>${doc.data().placement}</td><td>${doc.data().competitionName}</td><td>${doc.data().date}</td>`
+        document.getElementById("filteredResults").append(row);
+
+        if(!summary[curName]){
+            summary[curName] = {"1": 0, "2": 0, "3": 0, name: curName}
+        }
+
+        if(doc.data().placement <= 3){
+            summary[curName][doc.data().placement]++;
+        }
+    });
+    
+    createSummary(toArray(summary));
+    
+}
+
+function createSummary(summaryArr){
+    summaryArr.sort(function(a, b){
+        let costA = 7 * a["1"] + 3 * a["2"] + a["3"],
+            costB = 7 * b["1"] + 3 * b["2"] + b["3"];
+            return costA < costB;
+    });
+
+    document.getElementById("filterSummary").innerHTML = "";
+    for(person of summaryArr){
+        let row = document.createElement("tr");
+        row.innerHTML = `<td>${person.name}</td><td>${person["1"]}</td><td>${person["2"]}</td><td>${person["3"]}</td>`
+        document.getElementById("filterSummary").appendChild(row);
+    }
+}
+
+function toArray(obj){
+    let res = [];
+
+    for(item in obj){
+        res.push(obj[item]);
+    }
+
+    return res;
+}
 
 function openNav() {
     document.getElementById("competitorsSideNav").style.width = "250px";

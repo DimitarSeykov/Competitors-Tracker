@@ -176,6 +176,97 @@
                 <a href="#" id="registerCompetitionBtn" data-toggle="modal" data-target="#modalRegisterCompetition">Register Competition</a>
             </div>
             
+
+            <div class="modal" id="modalRegisterResult">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button class="close" type="button" data-dismiss="modal">&times</button>
+                            <h2 class="modal-title">Add Competition</h2>
+                        </div>
+
+                        <div class="modal-body">
+                            <label for="competitorNameResult">Name:</label>
+                            <select id="competitorNameResult">
+                                
+                            </select>
+
+                            <label for="competitionResult">Competition</label>
+                            <select id="competitionResult"> 
+
+                            </select>
+
+                            <label for="result">Placement</label>
+                            <select id="result">
+                                <option>1</option>
+                                <option>2</option> 
+                                <option>3</option> 
+                                <option>4</option> 
+                                <option>5</option> 
+                                <option>6</option> 
+                                <option>7</option>  
+                                <option>8</option> 
+                                <option>9-16</option>
+                                <option>17-32</option> 
+                                <option>33-64</option> 
+                            </select>
+                            
+                            
+                            
+                            <button id="addResultToDB">Add</button>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <a href="#" id="registerResult" data-toggle="modal" data-target="#modalRegisterResult">Add Result</a>
+            </div>
+
+            <div class="modal" id="modalFilters">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button class="close" type="button" data-dismiss="modal">&times</button>
+                            <h2 class="modal-title">Filters</h2>
+                        </div>
+
+                        <div class="modal-body">
+                            <label for="filterName">Name:</label>
+                            <select id="filterName">
+                                
+                            </select>
+
+                            <label for="filterCompetition">Competition</label>
+                            <select id="filterCompetition"> 
+
+                            </select>
+
+                            <label for="filterDateStart">From: </label>
+                            <input type="date" id="filterDateStart">
+
+                            <label for="filterDateEnd">Until: </label>
+                            <input type="date" id="filterDateEnd">
+                            
+                            
+                            
+                            <button id="filter">Filter</button>
+
+                            <table id="filteredResults"></table>
+
+                            <table id="filterSummary">
+
+                            </table>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <a href="#" id="showFilters" data-toggle="modal" data-target="#modalFilters">Show Filters</a>
+            </div>
            
             <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; List Competitors</span>
             <div id="competitorsSideNav" class="sidenav">
