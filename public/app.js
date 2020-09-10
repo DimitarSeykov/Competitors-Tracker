@@ -104,7 +104,7 @@ competitorStartYear.onchange = makeUploadButtonVisible;
 
 function makeUploadButtonVisible(){
     if(competitorName.value && competitorBirthDate.value && competitorStartYear.value){
-        document.getElementById("addCompetitorPhoto").hidden = false;
+        document.getElementById("fileSelectHolder").hidden = false;
         document.getElementById("photoHolder").hidden = false;
     }
 }
@@ -122,7 +122,7 @@ function clearFields(){
         document.getElementById("photoHolder").removeChild(document.getElementById("currentPhoto"));
     }
 
-    document.getElementById("addCompetitorPhoto").hidden = true;
+    document.getElementById("fileSelectHolder").hidden = true;
     document.getElementById("photoHolder").hidden = true;
 }
 
@@ -193,8 +193,8 @@ function displayCompetitorInfo(){
     document.getElementById("registeredCompetitorStartYear").value = competitors[name].startDate;
     let photo = document.getElementById("registeredPhoto")
     photo.setAttribute("src", competitors[name].photoUrl);
-    photo.setAttribute("height", "133px");
-    photo.setAttribute("width", "100px");
+    photo.setAttribute("height", "200x");
+    photo.setAttribute("width", "150px");
 }
 
 const addCompetitorPhotoButton = document.getElementById("addCompetitorPhoto");
@@ -218,6 +218,8 @@ addCompetitorPhotoButton.addEventListener("change", async (e) => {
         document.getElementById("photoHolder").appendChild(img);
         lastAddedPhotoUrl = url;
     }).catch((err) => {console.log(err)});
+
+    $("#modalRegisterCompetitor").modal('handleUpdate');
 
     // TODO: track upload progress
 });
@@ -374,10 +376,10 @@ function toArray(obj){
     return res;
 }
 
-function openNav() {
-    document.getElementById("competitorsSideNav").style.width = "250px";
-}
+// function openNav() {
+//     document.getElementById("competitorsSideNav").style.width = "250px";
+// }
   
-function closeNav() {
-    document.getElementById("competitorsSideNav").style.width = "0";
-}
+// function closeNav() {
+//     document.getElementById("competitorsSideNav").style.width = "0";
+// }

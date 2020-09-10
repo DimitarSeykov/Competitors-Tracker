@@ -1,14 +1,15 @@
 .sidenav {
     height: 100%;
-    width: 0;
+    width: 267px;
     position: fixed;
     z-index: 1;
     top: 0;
     right: 0;
-    background-color: #111;
+    background-color: #0f1f2e;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
+    overflow: scroll;
   }
   
   .sidenav a {
@@ -39,7 +40,8 @@
 
   #competitorsSideNavNamesHolder > li {
       color: white;
-      margin-left: 5px;
+      margin-left: 40px;
+      font-size: 20px;
   }
 
   table {
@@ -57,4 +59,69 @@
   
   tr:nth-child(even) {
     background-color: #dddddd;
+  }
+
+  .tile {
+     border-color: white;
+     border-style: solid;
+     width: 300px;
+     height: 180px;
+     margin: 30px;
+     background-color: #4a0c30;
+     border-radius: 8px;
+  } 
+
+  .tile > div  {
+    height: 40px;
+    border-color: white;
+    border-bottom-style: solid;
+  }
+
+  .tile > div > a {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 10px;
+  }
+
+  .tile > span {
+    color: #e3e3e3;
+    text-align: justify;
+    display: block;
+    font-size: 15px;
+    margin: 10px;
+  }
+
+  .modal-header {
+    background-color: #ededed;
+  }
+
+
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .hero-image {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://firebasestorage.googleapis.com/v0/b/competitiors-tracker.appspot.com/o/images%2FsportsRio.jpg?alt=media&token=643ac491-e021-4a82-8465-5d74c4c4ae67");
+    height: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+  
+  .hero-text {
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    color: white;
+  }
+
+  #whenSignedIn, #whenSignedOut{
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/competitiors-tracker.appspot.com/o/images%2Fblue.jpg?alt=media&token=8a4edd34-7f47-4af9-a3ef-35a872279eb4");
+    background-repeat: no-repeat;
+    background-size: cover;
   }
