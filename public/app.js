@@ -316,7 +316,7 @@ document.getElementById("filter").onclick = async () => {
     if(query.empty){
         console.log("empty query");
     }
-    document.getElementById("filteredResults").innerHTML = "";
+    document.getElementById("filteredResults").innerHTML = "<td>Name</td><td>Result</td><td>Tournament</td><td>Date</td>";
 
     summary = {};
 
@@ -346,7 +346,7 @@ function createSummary(summaryArr){
             return costA < costB;
     });
 
-    document.getElementById("filterSummary").innerHTML = "";
+    document.getElementById("filterSummary").innerHTML = "<td>Name</td><td>Gold</td><td>Silver</td><td>Bronze</td>";
     let gold = 0,
         silver = 0,
         bronze = 0;
