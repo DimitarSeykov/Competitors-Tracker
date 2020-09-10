@@ -219,8 +219,6 @@ addCompetitorPhotoButton.addEventListener("change", async (e) => {
         lastAddedPhotoUrl = url;
     }).catch((err) => {console.log(err)});
 
-    $("#modalRegisterCompetitor").modal('handleUpdate');
-
     // TODO: track upload progress
 });
 

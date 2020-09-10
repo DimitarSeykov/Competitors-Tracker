@@ -67,6 +67,7 @@
      width: 300px;
      height: 180px;
      margin: 30px;
+     margin-left: 20%;
      background-color: #4a0c30;
      border-radius: 8px;
   } 
@@ -125,3 +126,18 @@
     background-repeat: no-repeat;
     background-size: cover;
   }
+
+  #competitorsSideNavNamesHolder > li:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .modal-content {
+    height: 100%;
+  }
+
+  .modal-body {
+    /* 100% = dialog height, 120px = header + footer */
+    max-height: calc(100% - 120px);
+    overflow-y: scroll;
+}
