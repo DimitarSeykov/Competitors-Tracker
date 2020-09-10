@@ -347,11 +347,21 @@ function createSummary(summaryArr){
     });
 
     document.getElementById("filterSummary").innerHTML = "";
+    let gold = 0,
+        silver = 0,
+        bronze = 0;
+
     for(person of summaryArr){
         let row = document.createElement("tr");
         row.innerHTML = `<td>${person.name}</td><td>${person["1"]}</td><td>${person["2"]}</td><td>${person["3"]}</td>`
         document.getElementById("filterSummary").appendChild(row);
+        gold += person["1"];
+        silver += person["2"];
+        bronze += person["3"];
     }
+    let row = document.createElement("tr");
+    row.innerHTML = `<td>Total </td><td>${gold}</td><td>${silver}</td><td>${bronze}</td>`;
+    document.getElementById("filterSummary").appendChild(row);
 }
 
 function toArray(obj){
