@@ -299,11 +299,11 @@ document.getElementById("filter").onclick = async () => {
     let query = resultsRef;
     if(name){
         query = query.where('competitorName', '==', name);
-        query = query.orderBy("competitorName");
+        //query = query.orderBy("competitorName");
     }
     if(competition){
         query = query.where('competitionName', '==', competition);
-        query = query.orderBy("competitorName");
+        //query = query.orderBy("competitorName");
     }
     if(from){
         query = query.where('date', '>=', from);
